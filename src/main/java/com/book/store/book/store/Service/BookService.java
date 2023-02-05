@@ -2,6 +2,7 @@ package com.book.store.book.store.Service;
 
 import com.book.store.book.store.Dto.BookDto;
 import com.book.store.book.store.Dto.BookDtoConverter;
+import com.book.store.book.store.Dto.request.CreateBookRequest;
 import com.book.store.book.store.Exception.BookNotFoundException;
 import com.book.store.book.store.Model.Book;
 import com.book.store.book.store.Repository.BookRepository;
@@ -42,6 +43,14 @@ public class BookService {
         getBookById(id);
         bookRepository.deleteById(id);
         return "book deleted successfully " + id;
+    }
+
+    public BookDto createBook (CreateBookRequest createBookRequest) {
+        Book book = new Book();
+        createBookRequest.getTitle();
+        createBookRequest.getCost();
+
+        return bookDtoConverter.convert(bookRepository.save(book));
     }
 
 }
