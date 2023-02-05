@@ -2,14 +2,17 @@ package com.book.store.book.store.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
 
 @Entity
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "author_id")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -25,8 +28,8 @@ public class Author {
 
     @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL,orphanRemoval = true)
     @JoinTable(name = "author_address",
-            joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id",referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id",referencedColumnName = "asdress_id"))
     private List<Address> addresses;
 
 
@@ -34,7 +37,7 @@ public class Author {
     @JsonIgnore
     private List<Book> books;
 
-    public Author(long id, String firstName, String lastName, String email, String phone, List<Address> addresses, List<Book> books) {
+    public Author(String id, String firstName, String lastName, String email, String phone, List<Address> addresses, List<Book> books) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,14 +46,21 @@ public class Author {
         this.addresses = addresses;
         this.books = books;
     }
+    public Author(String id, String firstName, String lastName, String email, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+    }
 
     public Author() {}
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

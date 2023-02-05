@@ -3,6 +3,7 @@ package com.book.store.book.store.Service;
 import com.book.store.book.store.Dto.BookDto;
 import com.book.store.book.store.Dto.BookDtoConverter;
 import com.book.store.book.store.Dto.request.CreateBookRequest;
+import com.book.store.book.store.Dto.request.UpdateBookRequest;
 import com.book.store.book.store.Exception.BookNotFoundException;
 import com.book.store.book.store.Model.Book;
 import com.book.store.book.store.Repository.BookRepository;
@@ -15,10 +16,13 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookDtoConverter bookDtoConverter;
 
+    private final AuthorService authorService;
 
-    public BookService(BookRepository bookRepository, BookDtoConverter bookDtoConverter) {
+
+    public BookService(BookRepository bookRepository, BookDtoConverter bookDtoConverter, AuthorService authorService) {
         this.bookRepository = bookRepository;
         this.bookDtoConverter = bookDtoConverter;
+        this.authorService = authorService;
     }
 
     protected Book findBookById(String id) {
@@ -46,11 +50,21 @@ public class BookService {
     }
 
     public BookDto createBook (CreateBookRequest createBookRequest) {
-        Book book = new Book();
-        createBookRequest.getTitle();
-        createBookRequest.getCost();
-
+        Book book = new Book(
+        createBookRequest.getTitle(),
+        createBookRequest.getCost()
+);
         return bookDtoConverter.convert(bookRepository.save(book));
+    }
+
+    public BookDto updateBook (String id, UpdateBookRequest updateBookRequest) {
+        Book book = findBookById(String.valueOf(id));
+        Book updateBook = new Book(
+                book.getTitle(),
+                book.getCost()
+        );
+
+        return bookDtoConverter.convert(bookRepository.save(updateBook));
     }
 
 }

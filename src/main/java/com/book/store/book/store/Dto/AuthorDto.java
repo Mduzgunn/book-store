@@ -1,7 +1,7 @@
 package com.book.store.book.store.Dto;
 
 public class AuthorDto {
-    private long id;
+    private String id;
 
     private String firstName;
 
@@ -11,11 +11,11 @@ public class AuthorDto {
 
     private String phone;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
