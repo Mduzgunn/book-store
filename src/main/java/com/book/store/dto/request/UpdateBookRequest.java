@@ -1,6 +1,6 @@
-package com.book.store.book.store.Dto.request;
+package com.book.store.dto.request;
 
-import com.book.store.book.store.Model.Author;
+import com.book.store.model.Author;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class UpdateBookRequest {
     String title;
     Double cost;
 
-    List<String> authorIdList;
+    List<Author> authorIdList;
 
     public Long getId() {
         return id;
@@ -36,11 +36,11 @@ public class UpdateBookRequest {
         this.cost = cost;
     }
 
-    public List<String> getAuthorIdList() {
+    public List<Author> getAuthorIdList() {
         return authorIdList;
     }
 
-    public void setAuthorIdList(List<String> authorIdList) {
+    public void setAuthorIdList(List<Author> authorIdList) {
         this.authorIdList = authorIdList;
     }
 }

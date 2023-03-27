@@ -1,6 +1,6 @@
-package com.book.store.book.store.Repository;
+package com.book.store.repository;
 
-import com.book.store.book.store.Model.Book;
+import com.book.store.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

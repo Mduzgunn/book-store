@@ -1,6 +1,7 @@
-package com.book.store.book.store.Dto;
+package com.book.store.dto.converter;
 
-import com.book.store.book.store.Model.Book;
+import com.book.store.dto.BookDto;
+import com.book.store.model.Book;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

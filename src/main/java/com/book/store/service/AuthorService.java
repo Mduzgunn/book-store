@@ -1,10 +1,8 @@
-package com.book.store.book.store.Service;
+package com.book.store.service;
 
-import com.book.store.book.store.Dto.BookDtoConverter;
-import com.book.store.book.store.Dto.converter.AuthorDtoConverter;
-import com.book.store.book.store.Model.Author;
-import com.book.store.book.store.Repository.AuthorRepository;
-import com.book.store.book.store.Repository.BookRepository;
+import com.book.store.dto.converter.AuthorDtoConverter;
+import com.book.store.repository.AuthorRepository;
+import com.book.store.model.Author;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

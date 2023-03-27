@@ -1,16 +1,14 @@
-package com.book.store.book.store.Model;
+package com.book.store.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
@@ -33,7 +31,8 @@ public class Book {
     @JsonIgnoreProperties(value = {"addresses"})
     private List<Author> authors;
 
-    public Book(String title, Double cost, List<Author> authors) {
+    public Book(String id,String title, Double cost, List<Author> authors) {
+        this.id = id;
         this.title = title;
         this.cost = cost;
         this.authors = authors;

@@ -1,4 +1,4 @@
-package com.book.store.book.store.Dto;
+package com.book.store.dto;
 
 public class AuthorDto {
     private String id;

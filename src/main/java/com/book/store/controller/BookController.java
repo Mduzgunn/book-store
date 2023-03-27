@@ -1,12 +1,11 @@
-package com.book.store.book.store.Controller;
+package com.book.store.controller;
 
-import com.book.store.book.store.Dto.BookDto;
-import com.book.store.book.store.Dto.request.CreateBookRequest;
-import com.book.store.book.store.Dto.request.UpdateBookRequest;
-import com.book.store.book.store.Service.BookService;
+import com.book.store.dto.BookDto;
+import com.book.store.service.BookService;
+import com.book.store.dto.request.CreateBookRequest;
+import com.book.store.dto.request.UpdateBookRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.book.store.book.store.Dto.request;
+package com.book.store.dto.request;
 
 public class CreateBookRequest {
     String title;

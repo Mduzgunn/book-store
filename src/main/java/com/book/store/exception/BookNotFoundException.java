@@ -1,4 +1,4 @@
-package com.book.store.book.store.Exception;
+package com.book.store.exception;
 
 public class BookNotFoundException extends RuntimeException{
     public BookNotFoundException (String s){
