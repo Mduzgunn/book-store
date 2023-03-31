@@ -1,6 +1,8 @@
 package com.book.store.dto.request;
 
-public class CreateBookRequest {
+import java.io.Serializable;
+
+public class CreateBookRequest implements Serializable {
     String title;
     Double cost;
 
