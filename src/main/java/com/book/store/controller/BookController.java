@@ -1,12 +1,11 @@
 package com.book.store.controller;
 
 import com.book.store.dto.BookDto;
-import com.book.store.message.RabbitConfig;
 import com.book.store.service.BookService;
 import com.book.store.dto.request.CreateBookRequest;
 import com.book.store.dto.request.UpdateBookRequest;
+import com.book.store.service.RabbitMQSender;
 import jakarta.validation.Valid;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,16 +21,16 @@ import java.util.List;
 @RequestMapping("/v1/book")
 public class BookController {
     private final BookService bookService;
-    private final RabbitTemplate rabbitTemplate;
+    private final RabbitMQSender rabbitMQSender;
 
-    public BookController(BookService bookService, RabbitTemplate rabbitTemplate) {
+    public BookController(BookService bookService, RabbitMQSender rabbitMQSender) {
         this.bookService = bookService;
-        this.rabbitTemplate = rabbitTemplate;
+        this.rabbitMQSender = rabbitMQSender;
     }
 
     @PostMapping
     public ResponseEntity<BookDto> createBook(@Valid @RequestBody CreateBookRequest createBookRequest) {
-        bookService.sendBookToQueue(createBookRequest);
+        rabbitMQSender.sendBookToQueue(createBookRequest);
         return ResponseEntity.ok(bookService.createBook(createBookRequest));
     }
 
