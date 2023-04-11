@@ -5,6 +5,7 @@ import com.book.store.dto.converter.BookDtoConverter;
 import com.book.store.dto.request.CreateBookRequest;
 import com.book.store.dto.request.UpdateBookRequest;
 import com.book.store.exception.BookNotFoundException;
+import com.book.store.model.Author;
 import com.book.store.model.Book;
 import com.book.store.repository.BookRepository;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,6 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookDtoConverter bookDtoConverter;
     private final AuthorService authorService;
-
 
     public BookService(BookRepository bookRepository, BookDtoConverter bookDtoConverter, AuthorService authorService) {
         this.bookRepository = bookRepository;
@@ -49,9 +49,11 @@ public class BookService {
     }
 
     public BookDto createBook (CreateBookRequest createBookRequest) {
+        Author author = authorService.findAuthorById(createBookRequest.getAuthorId());
         Book book = new Book(
         createBookRequest.getTitle(),
-        createBookRequest.getCost()
+        createBookRequest.getCost(),
+        author
 );
         return bookDtoConverter.convert(bookRepository.save(book));
     }
@@ -62,7 +64,7 @@ public class BookService {
                 book.getId(),
                 updateBookRequest.getTitle(),
                 updateBookRequest.getCost(),
-                updateBookRequest.getAuthorIdList()
+                updateBookRequest.getAuthorId()
         );
 
         return bookDtoConverter.convert(bookRepository.save(updateBook));

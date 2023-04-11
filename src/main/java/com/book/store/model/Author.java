@@ -2,8 +2,10 @@ package com.book.store.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,39 +17,33 @@ public class Author {
     private String id;
 
     @Column(name = "first_name")
+    @NotNull
     private String firstName;
 
     @Column(name = "last_name")
+    @NotNull
     private String lastName;
 
     @Column(name = "email")
+    @NotNull
     private String email;
 
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL,orphanRemoval = true)
-    @JoinTable(name = "author_address",
-            joinColumns = @JoinColumn(name = "author_id",referencedColumnName = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id",referencedColumnName = "asdress_id"))
-    private List<Address> addresses;
-
-
-    @ManyToMany(mappedBy = "authors")
+    @OneToMany(mappedBy = "author")
     @JsonIgnore
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();;
 
-    public Author(String id, String firstName, String lastName, String email, String phone, List<Address> addresses, List<Book> books) {
+    public Author(String id, String firstName, String lastName, String email, String phone, List<Book> books) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
-        this.addresses = addresses;
         this.books = books;
     }
-    public Author(String id, String firstName, String lastName, String email, String phone) {
-        this.id = id;
+    public Author(String firstName, String lastName, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -94,5 +90,13 @@ public class Author {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

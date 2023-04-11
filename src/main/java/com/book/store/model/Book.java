@@ -1,6 +1,5 @@
 package com.book.store.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,10 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
 
 @Entity
 public class Book {
@@ -22,27 +20,28 @@ public class Book {
     private String id;
 
     private String title;
+
     private Double cost;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id",referencedColumnName = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id",referencedColumnName = "author_id"))
-    @JsonIgnoreProperties(value = {"addresses"})
-    private List<Author> authors;
+    private Author author;
 
-    public Book(String id,String title, Double cost, List<Author> authors) {
+    public Book(String id,String title, Double cost, Author author) {
         this.id = id;
         this.title = title;
         this.cost = cost;
-        this.authors = authors;
+        this.author = author;
     }
 
-    public Book(String title, Double cost) {
+    public Book(String title, Double cost, Author author) {
         this.title = title;
         this.cost = cost;
-    }
+        this.author = author;
 
+    }
 
     public Book() {}
 
@@ -70,12 +69,12 @@ public class Book {
         this.cost = cost;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
 }

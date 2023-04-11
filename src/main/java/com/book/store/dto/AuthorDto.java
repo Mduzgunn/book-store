@@ -1,5 +1,7 @@
 package com.book.store.dto;
 
+import java.util.List;
+
 public class AuthorDto {
     private String id;
 
@@ -10,6 +12,25 @@ public class AuthorDto {
     private String email;
 
     private String phone;
+
+    private List<BookDto> books;
+
+    public AuthorDto(String id, String firstName, String lastName, String email, String phone, List<BookDto> books) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.books = books;
+    }
+
+    public AuthorDto(String id, String firstName, String lastName, String email, String phone) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+    }
 
     public String getId() {
         return id;
@@ -50,4 +71,14 @@ public class AuthorDto {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public List<BookDto> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookDto> books) {
+        this.books = books;
+    }
+
+
 }

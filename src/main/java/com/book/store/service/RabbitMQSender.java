@@ -1,5 +1,6 @@
 package com.book.store.service;
 
+import com.book.store.dto.request.CreateAuthorRequest;
 import com.book.store.dto.request.CreateBookRequest;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -27,5 +28,11 @@ public class RabbitMQSender {
         amqpTemplate.convertAndSend(exchange, routingkey, createBookRequest);
         LOGGER.info("Book sent to queue. Book Title: {}, Book Cost: {}",
                 createBookRequest.getTitle(), createBookRequest.getCost());
+    }
+
+    public void sendAuthorToQueue(CreateAuthorRequest createAuthorRequest) {
+        amqpTemplate.convertAndSend(exchange, routingkey, createAuthorRequest);
+        LOGGER.info("Author sent to queue. Author FirstName: {}, Author LastName: {}",
+                createAuthorRequest.getFirstName(), createAuthorRequest.getLastName());
     }
 }

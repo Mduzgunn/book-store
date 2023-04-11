@@ -2,21 +2,18 @@ package com.book.store.dto.request;
 
 import com.book.store.model.Author;
 
-import java.util.List;
-
 public class UpdateBookRequest {
 
-    Long id;
+    String id;
     String title;
     Double cost;
+    Author authorId;
 
-    List<Author> authorIdList;
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -36,11 +33,11 @@ public class UpdateBookRequest {
         this.cost = cost;
     }
 
-    public List<Author> getAuthorIdList() {
-        return authorIdList;
+    public Author getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthorIdList(List<Author> authorIdList) {
-        this.authorIdList = authorIdList;
+    public void setAuthorId(Author authorId) {
+        this.authorId = authorId;
     }
 }

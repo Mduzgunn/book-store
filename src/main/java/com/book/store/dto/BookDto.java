@@ -2,21 +2,18 @@ package com.book.store.dto;
 
 public class BookDto {
     private String id;
-
     private String title;
-
     private Double cost;
-
-    private long[] authors;
+    private AuthorDto author;
 
     public BookDto() {}
 
-    public BookDto(String id, String title, Double cost, long[] authors)
+    public BookDto(String id, String title, Double cost, AuthorDto author)
     {
         this.id = id;
         this.title = title;
         this.cost = cost;
-        this.authors = authors;
+        this.author = author;
     }
 
     public BookDto(String id, String title, Double cost)
@@ -50,11 +47,11 @@ public class BookDto {
         this.cost = cost;
     }
 
-    public long[] getAuthors() {
-        return authors;
+    public AuthorDto getAuthor() {
+        return author;
     }
 
-    public void setAuthors(long[] authors) {
-        this.authors = authors;
+    public void setAuthor(AuthorDto author) {
+        this.author = author;
     }
 }

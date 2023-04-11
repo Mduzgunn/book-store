@@ -34,13 +34,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.createBook(createBookRequest));
     }
 
-
-//    @PostMapping
-//    public ResponseEntity<Void> createBook(@RequestBody BookDto bookDto) {
-//        bookService.sendBookToQueue(bookDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-
     @GetMapping
     public ResponseEntity<List<BookDto>> getBooks() {
         List<BookDto> bookDtoList = bookService.getAllBookDtoList();
@@ -49,8 +42,8 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDto> getBookById(@PathVariable String id) {
-        BookDto movieDto = bookService.getBookById(id);
-        return ResponseEntity.ok(movieDto);
+        BookDto bookDto = bookService.getBookById(id);
+        return ResponseEntity.ok(bookDto);
     }
 
     @PutMapping(value = "/{id}")
