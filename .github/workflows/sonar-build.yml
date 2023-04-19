@@ -5,10 +5,8 @@ on:
       - '*'
     paths:
       - '**/*.java'
-    if: "contains(github.ref, 'refs/tags/') && contains(github.event.head_commit.message, 'sonar')"
   pull_request:
     types: [opened, synchronize, reopened]
-    if: "contains(github.event.pull_request.head.sha, 'sonar')"
 jobs:
   build:
     name: Build and analyze
