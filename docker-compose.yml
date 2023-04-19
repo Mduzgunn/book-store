@@ -1,39 +1,37 @@
-version: '3.8'
+version: '3'
+
 services:
   app:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/book-sv
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: toor
-      SPRING_RABBITMQ_HOST: rabbitmq
+    image: 'book:latest'
+    build:
+      context: .
+    container_name: book
     depends_on:
-      - mysql
+      - db
       - rabbitmq
-    networks:
-      - my-network
-  mysql:
-    image: mysql:8.0.28
-    environment:
-      MYSQL_ROOT_PASSWORD: toor
-      MYSQL_DATABASE: book-sv
-      MYSQL_USER: root
-      MYSQL_PASSWORD: toor
     ports:
-      - "3307:3306"
-    networks:
-      - my-network
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-sv:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=toor
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: book-sv
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=toor
+    ports:
+      - 5433:5432
+
   rabbitmq:
     image: rabbitmq:3.8.22
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
     ports:
-      - "5673:5672"
-    networks:
-      - my-network
-networks:
-  my-network:
-    driver: bridge
+      - 5673:5672
+      - 15673:15672
