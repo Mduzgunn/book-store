@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RabbitMQSender {
 
-    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(BookService.class);
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(RabbitMQSender.class);
 
     private final AmqpTemplate amqpTemplate;
 

@@ -33,7 +33,7 @@ public class Author {
 
     @OneToMany(mappedBy = "author")
     @JsonIgnore
-    private List<Book> books = new ArrayList<>();;
+    private List<Book> books = new ArrayList<>();
 
     public Author(String id, String firstName, String lastName, String email, String phone, List<Book> books) {
         this.id = id;
