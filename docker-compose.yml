@@ -50,13 +50,15 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.35.0
+    user: root
     network_mode: host
     container_name: prometheus
     restart: unless-stopped
     volumes:
-      - ./data/prometheus/config:/etc/prometheus/
+      - ./data/prometheus/config:/data/prometheus/
     command:
-      - "--config.file=/etc/prometheus/prometheus.yaml"
+        - "--storage.tsdb.path=/prometheus"
+        - "--storage.tsdb.retention.time=15d"
     ports:
       - 9090:9090
 
