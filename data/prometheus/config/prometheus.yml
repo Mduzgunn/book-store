@@ -21,4 +21,4 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:8080']
         labels:
-          application: "My Spring Boot Application"
+          application: "Book Store Application"
