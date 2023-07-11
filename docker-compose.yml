@@ -28,6 +28,7 @@ services:
     ports:
       - 5433:5432
 
+
   rabbitmq:
     image: rabbitmq:3.8.22
     environment:
