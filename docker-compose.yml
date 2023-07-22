@@ -5,21 +5,27 @@ services:
     image: 'book:latest'
     build:
       context: ../../..
-    container_name: book
+    ports:
+      - "9595-9597:8080"
+    deploy:
+      mode: replicated
+      replicas: 3
+    networks:
+      - book-store-network
     depends_on:
       - db
       - rabbitmq
       - prometheus
       - grafana
-    ports:
-      - 8080:8080
+
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://book-sv:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=toor
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_RABBITMQ_HOST=rabbitmq
-#      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=prometheus
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=prometheus
+      - MANAGEMENT_ENDPOINTS.HEALTH.SHOW-DETAILS=always
 
   db:
     image: 'postgres:13.1-alpine'
@@ -29,7 +35,6 @@ services:
       - POSTGRES_PASSWORD=toor
     ports:
       - 5433:5432
-
 
   rabbitmq:
     image: rabbitmq:3.8.22
@@ -41,14 +46,32 @@ services:
       - 15673:15672
 
   prometheus:
-    image: prom/prometheus
-    user: root
+    image: prom/prometheus:v2.35.0
+    container_name: prometheus
+    restart: unless-stopped
     ports:
       - "9090:9090"
     volumes:
-      - ./data/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./data/prometheus/config:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    networks:
+      - book-store-network
+
   grafana:
-    image: grafana/grafana
-    user: root
+    image: grafana/grafana-oss:8.5.2
+    pull_policy: always
+    container_name: grafana
+    restart: unless-stopped
     ports:
       - "3000:3000"
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost
+    networks:
+      - book-store-network
+
+networks:
+  book-store-network:
