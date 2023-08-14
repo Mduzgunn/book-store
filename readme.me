@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'book:latest'
+    build:
+      context: ../../..
+    container_name: book
+    depends_on:
+      - db
+      - rabbitmq
+      - prometheus
+      - grafana
+    ports:
+      - 8080:8080
+    networks:
+      - book-store-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-sv:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=toor
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=prometheus
+      - MANAGEMENT_ENDPOINTS.HEALTH.SHOW-DETAILS=always
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: book-sv
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=toor
+    ports:
+      - 5433:5432
+    networks:
+      - book-store-network
+
+  rabbitmq:
+    image: rabbitmq:3.8.22
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - 5673:5672
+      - 15673:15672
+
+  prometheus:
+    image: prom/prometheus
+    user: root
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./data/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - book-store-network
+
+  grafana:
+    image: grafana/grafana
+    user: root
+    ports:
+      - "3000:3000"
+    networks:
+      - book-store-network
+
+networks:
+  book-store-network:
