@@ -2,14 +2,13 @@ version: '3'
 
 services:
   app:
+    container_name: book-app
+    hostname: "book-app"
     image: 'book:latest'
     build:
       context: ../../..
     ports:
       - "9595-9597:8080"
-    deploy:
-      mode: replicated
-      replicas: 3
     networks:
       - book-store-network
     depends_on:
@@ -30,6 +29,7 @@ services:
   db:
     image: 'postgres:13.1-alpine'
     container_name: book-sv
+    hostname: "book-sv"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=toor
@@ -38,6 +38,8 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.8.22
+    container_name: book-rabbitmq
+    hostname: "book-rabbitmq"
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
@@ -48,6 +50,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.35.0
     container_name: prometheus
+    hostname: "prometheus"
     restart: unless-stopped
     ports:
       - "9090:9090"
@@ -62,6 +65,7 @@ services:
     image: grafana/grafana-oss:8.5.2
     pull_policy: always
     container_name: grafana
+    hostname: "grafana"
     restart: unless-stopped
     ports:
       - "3000:3000"
